@@ -30,8 +30,8 @@ Route::get('/', function () {
 });
 
 Route::resource('/users', UserController::class);
-Route::resource('/roles', RoleController::class);
-Route::resource('/permissions', PermissionController::class);
+Route::resource('/roles', RoleController::class)->except('show');
+Route::resource('/permissions', PermissionController::class)->except('show');
 
 Route::get('/dashboard', function () {
     return Inertia::render('Dashboard');

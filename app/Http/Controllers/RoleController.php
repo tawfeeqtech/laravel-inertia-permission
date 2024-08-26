@@ -41,7 +41,7 @@ class RoleController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Role $role)
+    public function edit(Role $role): Response
     {
         return Inertia::render('Admin/Role/RoleEdit', [
             'role' => new RoleResource($role)

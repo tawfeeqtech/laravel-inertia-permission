@@ -41,7 +41,7 @@ class PermissionController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Permission $permission)
+    public function edit(Permission $permission): Response
     {
         return Inertia::render('Admin/Permission/PermissionEdit', [
             'permission' => new PermissionResource($permission)
