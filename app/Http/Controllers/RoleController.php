@@ -39,19 +39,10 @@ class RoleController extends Controller
     }
 
     /**
-     * Display the specified resource.
-     */
-    public function show(string $id)
-    {
-        //
-    }
-
-    /**
      * Show the form for editing the specified resource.
      */
-    public function edit(string $id)
+    public function edit(Role $role)
     {
-        $role = Role::findById($id);
         return Inertia::render('Admin/Role/RoleEdit', [
             'role' => new RoleResource($role)
         ]);
@@ -60,9 +51,8 @@ class RoleController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(CreateRoleRequest $request, string $id)
+    public function update(CreateRoleRequest $request, Role $role)
     {
-        $role = Role::findById($id);
         $role->update($request->validated());
         return to_route('roles.index');
     }
@@ -70,9 +60,8 @@ class RoleController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(Role $role)
     {
-        $role = Role::findById($id);
         $role->delete();
         return back();
     }
