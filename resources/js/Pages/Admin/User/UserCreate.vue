@@ -5,12 +5,20 @@ import InputLabel from '@/Components/InputLabel.vue';
 import PrimaryButton from '@/Components/PrimaryButton.vue';
 import TextInput from '@/Components/TextInput.vue';
 import { Head, Link, useForm } from '@inertiajs/vue3';
+import VueMultiselect from 'vue-multiselect'
+
+defineProps({
+    roles: Array,
+    permissions: Array
+});
 
 const form = useForm({
     name: '',
     email: '',
     password: '',
     password_confirmation: '',
+    roles: [],
+    permissions: []
 });
 
 const submit = () => {
@@ -28,7 +36,7 @@ const submit = () => {
         <div class="py-4 mx-auto max-w-7xl">
             <div class="flex justify-between">
                 <Link class="px-3 py-2 font-semibold text-white bg-indigo-500 rounded hover:bg-indigo-700"
-                    :href="route('roles.index')">
+                    :href="route('users.index')">
                 back
                 </Link>
             </div>
@@ -72,6 +80,20 @@ const submit = () => {
                         <InputError class="mt-2" :message="form.errors.password_confirmation" />
                     </div>
 
+                    <div class="mt-4">
+                        <InputLabel for="roles" value="Roles" />
+
+                        <VueMultiselect v-model="form.roles" :options="roles" :multiple="true" :close-on-select="true"
+                            placeholder="pick some" label="name" track-by="id" />
+                    </div>
+
+                    <div class="mt-4">
+                        <InputLabel for="permissions" value="Permissions" />
+
+                        <VueMultiselect v-model="form.permissions" :options="permissions" :multiple="true"
+                            :close-on-select="true" placeholder="pick some" label="name" track-by="id" />
+                    </div>
+
                     <div class="flex items-center justify-end mt-4">
 
                         <PrimaryButton class="ms-4" :class="{ 'opacity-25': form.processing }"
@@ -86,3 +108,4 @@ const submit = () => {
 
     </AdminLayout>
 </template>
+<style src="vue-multiselect/dist/vue-multiselect.css"></style>
