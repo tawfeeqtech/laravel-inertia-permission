@@ -15,7 +15,7 @@ const form = useForm({
 
 <template>
 
-    <Head title="Create Role" />
+    <Head title="Create New Role" />
 
     <AdminLayout>
         <div class="py-4 mx-auto max-w-7xl">
@@ -25,8 +25,8 @@ const form = useForm({
                 back
                 </Link>
             </div>
-            <div class="max-w-md p-6 mx-auto mt-6 rounded-lg shadow-lg bg-slate-100">
-                <h1>Create New Role</h1>
+            <div class="max-w-6xl p-6 mx-auto mt-6 rounded-lg shadow-lg bg-slate-100">
+                <h1 class="text-2xl font-semibold text-indigo-700">Create New Role</h1>
                 <form @submit.prevent="form.post(route('roles.store'))">
                     <div>
                         <InputLabel for="name" value="Name" />
