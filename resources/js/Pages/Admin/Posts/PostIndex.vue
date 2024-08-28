@@ -49,8 +49,10 @@ const deletePost = (id) => {
                         <TableRow>
                             <TableHeaderCell>ID</TableHeaderCell>
                             <TableHeaderCell>Title</TableHeaderCell>
-                            <TableHeaderCell v-if="hasPermission(['update-post', 'delete-post'])">Action
+                            <TableHeaderCell v-if="hasPermission('update-post')">
+                                Action
                             </TableHeaderCell>
+
                         </TableRow>
                     </template>
 
