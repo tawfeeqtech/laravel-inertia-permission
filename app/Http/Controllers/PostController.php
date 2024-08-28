@@ -13,7 +13,6 @@ class PostController extends Controller
 {
     public function index(): Response
     {
-
         return Inertia::render('Admin/Posts/PostIndex', [
             'posts' => PostResource::collection(Post::all())
         ]);
@@ -24,6 +23,7 @@ class PostController extends Controller
      */
     public function create(): Response
     {
+        $this->authorize('create', Post::class);
         return Inertia::render('Admin/Posts/PostCreate');
     }
 
@@ -32,6 +32,7 @@ class PostController extends Controller
      */
     public function store(CreatePostRequest $request): RedirectResponse
     {
+        $this->authorize('create', Post::class);
         Post::create($request->validated());
         return to_route('posts.index');
     }
@@ -41,6 +42,7 @@ class PostController extends Controller
      */
     public function edit(Post $post): Response
     {
+        $this->authorize('update', $post);
         return Inertia::render('Admin/Posts/PostEdit', [
             'post' => new PostResource($post)
         ]);
@@ -51,6 +53,7 @@ class PostController extends Controller
      */
     public function update(CreatePostRequest $request, Post $post)
     {
+        $this->authorize('update', $post);
         $post->update($request->validated());
         return to_route('posts.index');
     }
@@ -60,6 +63,7 @@ class PostController extends Controller
      */
     public function destroy(Post $post)
     {
+        $this->authorize('delete', $post);
         $post->delete();
         return back();
     }

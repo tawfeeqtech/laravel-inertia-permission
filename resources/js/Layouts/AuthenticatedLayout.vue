@@ -8,7 +8,7 @@ import ResponsiveNavLink from '@/Components/ResponsiveNavLink.vue';
 import { Link } from '@inertiajs/vue3';
 import { usePermission } from '@/composables/permissions';
 const showingNavigationDropdown = ref(false);
-const { hasRole } = usePermission();
+const { hasRole, hasRoles } = usePermission();
 </script>
 
 <template>
@@ -36,7 +36,8 @@ const { hasRole } = usePermission();
                                     :active="route().current('admin.index')">
                                     Admin
                                 </NavLink>
-                                <NavLink :href="route('posts.index')" :active="route().current('posts.index')">
+                                <NavLink v-if="hasRole(['admin', 'moderator', 'writer'])" :href="route('posts.index')"
+                                    :active="route().current('posts.index')">
                                     Posts
                                 </NavLink>
                             </div>
