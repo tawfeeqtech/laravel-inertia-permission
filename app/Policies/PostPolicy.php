@@ -29,7 +29,7 @@ class PostPolicy
      */
     public function create(User $user): bool
     {
-        return $user->hasPermissionTo('create-post') ? true : false;
+        return $user->hasPermissionTo('create post') ? true : false;
     }
 
     /**
@@ -37,7 +37,7 @@ class PostPolicy
      */
     public function update(User $user, Post $post): bool
     {
-        return $user->hasPermissionTo('update-post') ? true : false;
+        return $user->hasPermissionTo('update post') ? true : false;
     }
 
     /**
@@ -45,7 +45,7 @@ class PostPolicy
      */
     public function delete(User $user, Post $post): bool
     {
-        return $user->hasPermissionTo('delete-post') ? true : false;
+        return $user->hasPermissionTo('delete post') ? true : false;
     }
 
     /**

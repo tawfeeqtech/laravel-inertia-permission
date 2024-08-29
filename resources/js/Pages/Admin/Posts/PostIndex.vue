@@ -36,7 +36,7 @@ const deletePost = (id) => {
         <div class="py-4 mx-auto max-w-7xl">
             <div class="flex justify-between">
                 <h1>Posts Index Page</h1>
-                <template v-if="hasPermission('create-post')">
+                <template v-if="hasPermission('create post')">
                     <Link class="px-3 py-2 font-semibold text-white bg-indigo-500 rounded hover:bg-indigo-700"
                         :href="route('posts.create')">
                     New Post
@@ -49,7 +49,7 @@ const deletePost = (id) => {
                         <TableRow>
                             <TableHeaderCell>ID</TableHeaderCell>
                             <TableHeaderCell>Title</TableHeaderCell>
-                            <TableHeaderCell v-if="hasPermission('update-post')">
+                            <TableHeaderCell v-if="hasPermission('update post')">
                                 Action
                             </TableHeaderCell>
 
@@ -61,14 +61,14 @@ const deletePost = (id) => {
                             <TableDataCell>{{ post.id }}</TableDataCell>
                             <TableDataCell>{{ post.title }}</TableDataCell>
                             <TableDataCell class="space-x-4">
-                                <template v-if="hasPermission('update-post')">
+                                <template v-if="hasPermission('update post')">
                                     <Link :href="route('posts.edit', post.id)"
                                         class="text-green-400 hover:text-green-600">
                                     Edit
                                     </Link>
                                 </template>
 
-                                <template v-if="hasPermission('delete-post')">
+                                <template v-if="hasPermission('delete post')">
                                     <button @click="confirmDelete"
                                         class="text-red-400 hover:text-red-600">delete</button>
                                     <Modal :show="showConfirmDeleteModal" @close="closeModal">

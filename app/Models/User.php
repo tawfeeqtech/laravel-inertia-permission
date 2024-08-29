@@ -8,10 +8,19 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
 use Spatie\Permission\Traits\HasRoles;
+use Illuminate\Database\Eloquent\Relations\MorphOne;
 
 class User extends Authenticatable
 {
     use HasApiTokens, HasFactory, Notifiable, HasRoles;
+
+    /**
+     * Get the user's image.
+     */
+    public function image(): MorphOne
+    {
+        return $this->morphOne(Image::class, 'imageable');
+    }
 
     /**
      * The attributes that are mass assignable.
@@ -43,4 +52,19 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
         'password' => 'hashed',
     ];
+
+    public function likes()
+    {
+        return $this->belongsToMany(Post::class, 'post_like')->withTimestamps();
+    }
+
+    public function hasLiked(Post $post)
+    {
+        return $this->likes()->where('post_id', $post->id)->exists();
+    }
+
+    public function comments()
+    {
+        return $this->hasMany(Comment::class);
+    }
 }

@@ -1,5 +1,6 @@
 <?php
 
+use App\Models\Post;
 use App\Models\User;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
@@ -12,16 +13,10 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('posts', function (Blueprint $table) {
+        Schema::create('post_like', function (Blueprint $table) {
             $table->id();
-            $table->string('title');
-            $table->string('slug')->unique();
-            $table->text('body');
-
-            $table->timestamp('published_at')->nullable();
-            $table->boolean('featured')->default(false);
-            $table->foreignIdFor(User::class);
-            $table->softDeletes();
+            $table->foreignIdFor(User::class)->index();
+            $table->foreignIdFor(Post::class)->index();
             $table->timestamps();
         });
     }
@@ -31,6 +26,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('posts');
+        Schema::dropIfExists('post_like');
     }
 };
