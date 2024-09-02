@@ -17,6 +17,12 @@ class PostResource extends JsonResource
         return [
             'id' => $this->id,
             'title' => $this->title,
+            'body' => $this->body,
+            'published_at' => $this->published_at,
+            'featured' => $this->featured ? true : false,
+            'thumbnail_url' => $this->getThumbnailUrl(), // Add the thumbnail URL here
+            'author' => new UserResource($this->whenLoaded('author')), // Include author relationship
+            'categories' => $this->whenLoaded('categories'), // Include author relationship
         ];
     }
 }

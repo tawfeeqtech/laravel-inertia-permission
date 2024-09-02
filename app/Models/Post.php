@@ -7,11 +7,21 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Eloquent\Relations\MorphOne;
+use Illuminate\Support\Facades\Storage;
 
 class Post extends Model
 {
     use HasFactory;
     use SoftDeletes;
+
+    protected static function boot()
+    {
+        parent::boot();
+
+        static::deleting(function ($post) {
+            $post->categories()->detach();
+        });
+    }
 
     protected $fillable = [
         'user_id',
@@ -27,9 +37,9 @@ class Post extends Model
      *
      * @var array<string, string>
      */
-    protected $casts = [
-        'published_at' => 'datetime',
-    ];
+    // protected $casts = [
+    //     'published_at' => 'datetime',
+    // ];
 
     protected $dates = ['published_at'];
 
@@ -86,5 +96,20 @@ class Post extends Model
     public function scopeSearch($query, string $search = '')
     {
         $query->where('title', 'like', "%{$search}%");
+    }
+
+    public function getThumbnailUrl()
+    {
+        // $isUrl = str_contains($this->image, 'http');
+
+        if ($this->image) {
+            $isUrl = str_contains($this->image->url, 'http');
+            // Return the URL directly if it's already an absolute URL
+            // return $isUrl ? $this->image->url : Storage::disk('public')->url($this->image->url);
+            return $isUrl ? $this->image->url : asset('uploads/posts/' . $this->image->url);
+        }
+
+        return asset('images/posts/default-image.jpg');
+        // return ($isUrl) ? $this->image : Storage::disk('post_images')->url($this->image);
     }
 }

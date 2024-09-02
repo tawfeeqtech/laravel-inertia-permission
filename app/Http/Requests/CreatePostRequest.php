@@ -22,8 +22,14 @@ class CreatePostRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'title' => ['required', 'string', 'max:250']
+            'title' => ['required', 'string', 'max:100'],
+            'body' => ['required', 'string', 'max:255'],
+            'featured' => ['required'],
+            // 'image' => ['required', 'image', 'mimes:jpg,jpeg,png,gif', 'max:2048'], // max 2048kb or 2mb
 
+            // The user should select at least one category
+            'categories' => ['required', 'array', 'min:1'],
+            'categories.*.id' => ['required', 'integer', 'exists:categories,id'],
         ];
     }
 }

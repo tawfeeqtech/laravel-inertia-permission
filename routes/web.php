@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AdminController;
+use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\PermissionController;
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\ProfileController;
@@ -50,6 +51,7 @@ Route::middleware(['auth', 'role:admin'])->prefix('/admin')->group(function () {
 
     Route::resource('/users', UserController::class);
     Route::resource('/roles', RoleController::class)->except('show');
+    Route::resource('/categories', CategoryController::class)->except('show');
     Route::resource('/permissions', PermissionController::class)->except('show');
     Route::delete('/roles/{role}/permissions/{permission}', RevokePermissionFromRole::class)->name('roles.permissions.destroy');
 
@@ -60,6 +62,7 @@ Route::middleware(['auth', 'role:admin'])->prefix('/admin')->group(function () {
 });
 
 Route::resource('/posts', PostController::class)->except('show')->middleware(['role:admin|moderator|writer']);
+Route::post('/posts/upload', [PostController::class, 'upload'])->name('posts.upload');
 
 
 require __DIR__ . '/auth.php';

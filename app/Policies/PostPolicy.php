@@ -37,7 +37,7 @@ class PostPolicy
      */
     public function update(User $user, Post $post): bool
     {
-        return $user->hasPermissionTo('update post') ? true : false;
+        return $user->hasPermissionTo('edit post') ? true : false;
     }
 
     /**

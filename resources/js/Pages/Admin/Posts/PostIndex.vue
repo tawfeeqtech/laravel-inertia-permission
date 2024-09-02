@@ -48,8 +48,12 @@ const deletePost = (id) => {
                     <template #header>
                         <TableRow>
                             <TableHeaderCell>ID</TableHeaderCell>
+                            <TableHeaderCell>img</TableHeaderCell>
                             <TableHeaderCell>Title</TableHeaderCell>
-                            <TableHeaderCell v-if="hasPermission('update post')">
+                            <TableHeaderCell>Author</TableHeaderCell>
+                            <TableHeaderCell>Published at</TableHeaderCell>
+                            <TableHeaderCell>Featured</TableHeaderCell>
+                            <TableHeaderCell v-if="hasPermission('edit post')">
                                 Action
                             </TableHeaderCell>
 
@@ -59,9 +63,15 @@ const deletePost = (id) => {
                     <template #default>
                         <TableRow v-for="post in posts" :key="post.id">
                             <TableDataCell>{{ post.id }}</TableDataCell>
+                            <TableDataCell>
+                                <img :src="post.thumbnail_url" class="w-8 h-8 mx-auto" />
+                            </TableDataCell>
                             <TableDataCell>{{ post.title }}</TableDataCell>
+                            <TableDataCell>{{ post.author.name }}</TableDataCell>
+                            <TableDataCell>{{ post.published_at }}</TableDataCell>
+                            <TableDataCell>{{ post.featured }}</TableDataCell>
                             <TableDataCell class="space-x-4">
-                                <template v-if="hasPermission('update post')">
+                                <template v-if="hasPermission('edit post')">
                                     <Link :href="route('posts.edit', post.id)"
                                         class="text-green-400 hover:text-green-600">
                                     Edit
